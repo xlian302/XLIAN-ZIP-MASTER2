@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="manifest" href="manifest.json">
-
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-
-<link rel="apple-touch-icon" href="icon-192.png">
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,12 +10,14 @@
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
 
-<!-- ICONOS -->
+<meta name="theme-color" content="#6d28d9">
+
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
 <link rel="apple-touch-icon" href="icon-192.png">
 
-<meta name="theme-color" content="#6d28d9">
 <meta name="apple-mobile-web-app-capable" content="yes">
+
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <!-- JSZIP -->
@@ -36,82 +33,41 @@
 }
 
 body{
+
     background:
     radial-gradient(circle at top left,#1f2bff,#090b18 35%),
     radial-gradient(circle at bottom right,#00d4ff,#090b18 40%),
     #090b18;
 
     color:white;
+
     min-height:100vh;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     padding:30px;
-    overflow-x:hidden;
-}
-
-/* EFECTOS FLOTANTES */
-
-.floating{
-    position:fixed;
-    width:500px;
-    height:500px;
-    border-radius:50%;
-    filter:blur(120px);
-    opacity:.18;
-    animation:float 10s infinite ease-in-out;
-    z-index:0;
-}
-
-.f1{
-    background:#00d4ff;
-    top:-100px;
-    left:-100px;
-}
-
-.f2{
-    background:#b721ff;
-    bottom:-150px;
-    right:-100px;
-    animation-delay:3s;
-}
-
-@keyframes float{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(30px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
 }
 
 .container{
 
-    position:relative;
-    z-index:1;
-
     width:100%;
-    max-width:1100px;
+    max-width:1200px;
 
     background:rgba(255,255,255,0.05);
 
-    border:1px solid rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.08);
 
-    backdrop-filter:blur(15px);
+    backdrop-filter:blur(18px);
 
-    border-radius:35px;
+    border-radius:40px;
 
-    padding:40px;
+    padding:45px;
 
     box-shadow:
     0 0 40px rgba(0,212,255,.2),
-    0 0 80px rgba(183,33,255,.15);
+    0 0 90px rgba(183,33,255,.18);
 
     animation:fadeIn 1s ease;
 }
@@ -120,7 +76,7 @@ body{
 
     from{
         opacity:0;
-        transform:translateY(30px);
+        transform:translateY(40px);
     }
 
     to{
@@ -130,14 +86,31 @@ body{
 }
 
 .header{
+
     text-align:center;
-    margin-bottom:40px;
+    margin-bottom:45px;
 }
 
+/* LOGO */
+
 .logo-top{
-    width:90px;
-    margin-bottom:15px;
+
+    width:110px;
+    height:110px;
+
+    margin:0 auto 20px auto;
+
     animation:pulse 3s infinite;
+
+    filter:
+    drop-shadow(0 0 15px #00d4ff)
+    drop-shadow(0 0 35px #b721ff);
+}
+
+.logo-top svg{
+
+    width:100%;
+    height:100%;
 }
 
 @keyframes pulse{
@@ -157,8 +130,8 @@ body{
 
 .header h1{
 
-    font-size:58px;
-    font-weight:800;
+    font-size:68px;
+    font-weight:900;
 
     background:linear-gradient(90deg,#ffffff,#00d4ff,#b721ff);
 
@@ -168,18 +141,22 @@ body{
 
 .header p{
 
-    margin-top:10px;
-    font-size:20px;
+    margin-top:12px;
+
+    font-size:22px;
+
     color:#c7c7c7;
 }
 
+/* DROP AREA */
+
 .drop-area{
 
-    border:3px dashed rgba(255,255,255,0.3);
+    border:3px dashed rgba(255,255,255,0.25);
 
-    border-radius:30px;
+    border-radius:35px;
 
-    padding:60px;
+    padding:80px 40px;
 
     text-align:center;
 
@@ -189,7 +166,7 @@ body{
 
     background:rgba(255,255,255,0.03);
 
-    min-height:300px;
+    min-height:350px;
 
     display:flex;
     justify-content:center;
@@ -206,7 +183,7 @@ body{
 
     border-color:#00d4ff;
 
-    box-shadow:0 0 30px rgba(0,212,255,.3);
+    box-shadow:0 0 35px rgba(0,212,255,.35);
 }
 
 .drop-area.dragover{
@@ -216,30 +193,19 @@ body{
     background:rgba(183,33,255,0.08);
 }
 
-.drop-area h2{
-
-    font-size:34px;
-    margin-bottom:15px;
-}
-
-.drop-area p{
-
-    color:#cccccc;
-    font-size:18px;
-}
-
 .drop-area::before{
 
     content:"";
 
     position:absolute;
 
-    width:500px;
-    height:500px;
+    width:600px;
+    height:600px;
 
-    background:radial-gradient(circle,#00d4ff33,transparent);
+    background:
+    radial-gradient(circle,#00d4ff22,transparent);
 
-    animation:rotate 12s linear infinite;
+    animation:rotate 14s linear infinite;
 }
 
 @keyframes rotate{
@@ -253,13 +219,33 @@ body{
     }
 }
 
+.drop-area h2{
+
+    font-size:52px;
+    z-index:2;
+}
+
+.drop-area p{
+
+    margin-top:15px;
+
+    font-size:22px;
+
+    color:#d7d7d7;
+
+    z-index:2;
+}
+
+/* BUTTONS */
+
 .buttons{
 
     display:flex;
-    gap:15px;
+    gap:20px;
+
     flex-wrap:wrap;
 
-    margin-top:30px;
+    margin-top:35px;
 }
 
 button{
@@ -268,12 +254,12 @@ button{
 
     border:none;
 
-    padding:18px;
+    padding:22px;
 
-    border-radius:18px;
+    border-radius:22px;
 
-    font-size:18px;
-    font-weight:bold;
+    font-size:22px;
+    font-weight:800;
 
     cursor:pointer;
 
@@ -287,9 +273,9 @@ button{
 
 button:hover{
 
-    transform:translateY(-4px) scale(1.02);
+    transform:translateY(-5px) scale(1.02);
 
-    box-shadow:0 0 25px rgba(0,212,255,.4);
+    box-shadow:0 0 25px rgba(0,212,255,.45);
 }
 
 .rar-btn{
@@ -304,9 +290,11 @@ button:hover{
     linear-gradient(90deg,#ff2d55,#ff0000);
 }
 
+/* PROGRESS */
+
 .progress-container{
 
-    margin-top:35px;
+    margin-top:40px;
 
     display:none;
 }
@@ -314,7 +302,7 @@ button:hover{
 .progress-bar{
 
     width:100%;
-    height:28px;
+    height:30px;
 
     background:#1d2335;
 
@@ -322,7 +310,7 @@ button:hover{
 
     overflow:hidden;
 
-    margin-top:10px;
+    margin-top:12px;
 }
 
 .progress{
@@ -338,8 +326,9 @@ button:hover{
 
 .progress-text{
 
-    margin-top:10px;
-    font-size:18px;
+    margin-top:12px;
+
+    font-size:20px;
 }
 
 .status{
@@ -348,32 +337,41 @@ button:hover{
 
     color:#00ffb7;
 
-    font-size:18px;
+    font-size:20px;
 }
+
+/* FILE LIST */
 
 .file-list{
 
-    margin-top:30px;
+    margin-top:35px;
 
     background:rgba(255,255,255,0.04);
 
-    border-radius:20px;
+    border-radius:25px;
 
-    padding:20px;
+    padding:25px;
 
-    max-height:260px;
+    max-height:320px;
 
     overflow:auto;
 }
 
+.file-list h3{
+
+    margin-bottom:15px;
+}
+
 .file-item{
 
-    padding:12px;
+    padding:14px;
 
     border-bottom:1px solid rgba(255,255,255,.08);
 
     color:#d7d7d7;
 }
+
+/* TABLES */
 
 .tables{
 
@@ -381,23 +379,23 @@ button:hover{
 
     grid-template-columns:1fr 1fr;
 
-    gap:20px;
+    gap:25px;
 
-    margin-top:35px;
+    margin-top:40px;
 }
 
 .table-box{
 
     background:rgba(255,255,255,0.04);
 
-    padding:20px;
+    padding:25px;
 
-    border-radius:20px;
+    border-radius:25px;
 }
 
 .table-box h3{
 
-    margin-bottom:15px;
+    margin-bottom:18px;
 }
 
 table{
@@ -408,29 +406,42 @@ table{
 
 th,td{
 
-    padding:12px;
-    text-align:left;
+    padding:14px;
+
     border-bottom:1px solid rgba(255,255,255,.08);
+
+    text-align:left;
 }
 
 .success{
+
     color:#00ffb7;
 }
 
 .error{
+
     color:#ff5b7f;
 }
 
+/* FOOTER */
+
 .footer{
 
-    margin-top:45px;
+    margin-top:50px;
 
     text-align:center;
 
-    color:#c9c9c9;
+    color:#cfcfcf;
 
     line-height:2;
 }
+
+.footer h3{
+
+    margin-bottom:8px;
+}
+
+/* HIDDEN INPUT */
 
 input{
     display:none;
@@ -443,39 +454,85 @@ input{
     }
 
     .header h1{
-        font-size:42px;
+        font-size:44px;
+    }
+
+    .drop-area h2{
+        font-size:36px;
     }
 
     .drop-area{
-        padding:40px;
+        padding:60px 20px;
     }
 }
 
 </style>
 </head>
-<body>
 
-<div class="floating f1"></div>
-<div class="floating f2"></div>
+<body>
 
 <div class="container">
 
+    <!-- HEADER -->
     <div class="header">
 
         <!-- LOGO -->
-        <img src="./icon-192.png" class="logo-top">
+        <div class="logo-top">
+
+        <svg viewBox="0 0 128 128"
+        xmlns="http://www.w3.org/2000/svg">
+
+        <defs>
+
+        <linearGradient id="g" x1="0" x2="1">
+
+        <stop offset="0%" stop-color="#00d4ff"/>
+
+        <stop offset="100%" stop-color="#b721ff"/>
+
+        </linearGradient>
+
+        </defs>
+
+        <rect width="128"
+        height="128"
+        rx="28"
+        fill="#0b1020"/>
+
+        <path d="M30 38h68v14H30z"
+        fill="url(#g)"/>
+
+        <path d="M36 52h56v14H36z"
+        fill="url(#g)"
+        opacity="0.8"/>
+
+        <path d="M42 66h44v14H42z"
+        fill="url(#g)"
+        opacity="0.6"/>
+
+        <path d="M26 84L50 108L102 56"
+        stroke="#ffffff"
+        stroke-width="10"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+        </svg>
+
+        </div>
 
         <h1>XLIAN ZIP MASTER</h1>
 
         <p>
-            Convierte archivos y carpetas a ZIP fácilmente
+            Convierte archivos y carpetas a ZIP de forma profesional
         </p>
 
     </div>
 
+    <!-- DROP -->
     <div class="drop-area" id="dropArea">
 
-        <h2>📂 Arrastra tus carpetas aquí</h2>
+        <h2>📂 Arrastra carpetas aquí</h2>
 
         <p>
             o haz clic para seleccionar carpetas y archivos
@@ -488,14 +545,15 @@ input{
 
     </div>
 
+    <!-- BUTTONS -->
     <div class="buttons">
 
-        <button onclick="convertirArchivos('zip')">
+        <button onclick="convertirArchivos()">
             📦 Convertir a ZIP
         </button>
 
-        <button onclick="convertirArchivos('rar')" class="rar-btn">
-            🗜️ Convertir a RAR
+        <button onclick="infoRAR()" class="rar-btn">
+            🗜️ Información RAR
         </button>
 
         <button onclick="cancelarConversion()" class="cancel-btn">
@@ -504,30 +562,42 @@ input{
 
     </div>
 
-    <div class="progress-container" id="progressContainer">
+    <!-- PROGRESS -->
+    <div class="progress-container"
+    id="progressContainer">
 
         <h3>⚡ Progreso</h3>
 
         <div class="progress-bar">
 
-            <div class="progress" id="progress"></div>
+            <div class="progress"
+            id="progress"></div>
 
         </div>
 
-        <div class="progress-text" id="progressText">
+        <div class="progress-text"
+        id="progressText">
+
             0%
+
         </div>
 
-        <div class="status" id="status"></div>
+        <div class="status"
+        id="status"></div>
 
     </div>
 
-    <div class="file-list" id="fileList">
+    <!-- FILES -->
+    <div class="file-list"
+    id="fileList">
 
-        <h3>📁 Archivos y carpetas cargadas</h3>
+        <h3>
+            📁 Archivos y carpetas cargadas
+        </h3>
 
     </div>
 
+    <!-- TABLES -->
     <div class="tables">
 
         <div class="table-box">
@@ -539,8 +609,11 @@ input{
                 <thead>
 
                     <tr>
+
                         <th>Archivo</th>
+
                         <th>Estado</th>
+
                     </tr>
 
                 </thead>
@@ -560,8 +633,11 @@ input{
                 <thead>
 
                     <tr>
+
                         <th>Archivo</th>
+
                         <th>Causa</th>
+
                     </tr>
 
                 </thead>
@@ -574,6 +650,7 @@ input{
 
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
 
         <h3>XLIAN ZIP MASTER © 2026</h3>
@@ -588,45 +665,65 @@ input{
 
 <script>
 
-const dropArea = document.getElementById("dropArea");
-const fileInput = document.getElementById("fileInput");
-const progress = document.getElementById("progress");
-const progressText = document.getElementById("progressText");
-const status = document.getElementById("status");
-const progressContainer = document.getElementById("progressContainer");
-const fileList = document.getElementById("fileList");
-const resultTable = document.getElementById("resultTable");
-const errorTable = document.getElementById("errorTable");
+const dropArea =
+document.getElementById("dropArea");
+
+const fileInput =
+document.getElementById("fileInput");
+
+const progress =
+document.getElementById("progress");
+
+const progressText =
+document.getElementById("progressText");
+
+const status =
+document.getElementById("status");
+
+const progressContainer =
+document.getElementById("progressContainer");
+
+const fileList =
+document.getElementById("fileList");
+
+const resultTable =
+document.getElementById("resultTable");
+
+const errorTable =
+document.getElementById("errorTable");
 
 let files = [];
+
 let cancelado = false;
+
+/* CLICK */
 
 dropArea.addEventListener("click",()=>{
 
     fileInput.click();
-
 });
+
+/* INPUT */
 
 fileInput.addEventListener("change",(e)=>{
 
     files = [...e.target.files];
 
     mostrarArchivos();
-
 });
+
+/* DRAG */
 
 dropArea.addEventListener("dragover",(e)=>{
 
     e.preventDefault();
 
     dropArea.classList.add("dragover");
-
 });
 
 dropArea.addEventListener("dragleave",()=>{
 
     dropArea.classList.remove("dragover");
-
 });
 
 dropArea.addEventListener("drop",(e)=>{
@@ -638,8 +735,9 @@ dropArea.addEventListener("drop",(e)=>{
     files = [...e.dataTransfer.files];
 
     mostrarArchivos();
-
 });
+
+/* SHOW FILES */
 
 function mostrarArchivos(){
 
@@ -648,7 +746,8 @@ function mostrarArchivos(){
 
     files.forEach(file=>{
 
-        const div = document.createElement("div");
+        const div =
+        document.createElement("div");
 
         div.className = "file-item";
 
@@ -656,9 +755,10 @@ function mostrarArchivos(){
         `📄 ${file.webkitRelativePath || file.name}`;
 
         fileList.appendChild(div);
-
     });
 }
+
+/* CANCEL */
 
 function cancelarConversion(){
 
@@ -668,11 +768,26 @@ function cancelarConversion(){
     "❌ Conversión cancelada";
 }
 
-async function convertirArchivos(tipo="zip"){
+/* INFO RAR */
+
+function infoRAR(){
+
+    alert(
+`⚠️ Los navegadores no pueden crear archivos RAR reales directamente.
+
+RAR necesita programas externos o servidores especializados.
+
+ZIP funciona perfectamente y mantiene la estructura completa de carpetas.`
+    );
+}
+
+/* ZIP */
+
+async function convertirArchivos(){
 
     if(files.length === 0){
 
-        alert("Sube archivos primero");
+        alert("Sube archivos o carpetas primero");
 
         return;
     }
@@ -686,19 +801,12 @@ async function convertirArchivos(tipo="zip"){
     progressText.innerHTML = "0%";
 
     resultTable.innerHTML = "";
+
     errorTable.innerHTML = "";
 
     let exitosos = [];
+
     let errores = [];
-
-    if(tipo === "rar"){
-
-        alert(
-        "⚠️ Los navegadores no pueden crear archivos RAR reales.\n\nUsa ZIP para una conversión funcional."
-        );
-
-        return;
-    }
 
     const zip = new JSZip();
 
@@ -752,7 +860,7 @@ async function convertirArchivos(tipo="zip"){
     }
 
     status.innerHTML =
-    "⚡ Generando ZIP...";
+    "⚡ Generando ZIP final...";
 
     const contenido =
     await zip.generateAsync({
@@ -761,6 +869,9 @@ async function convertirArchivos(tipo="zip"){
 
     });
 
+    const nombreZIP =
+    "XLIAN_ARCHIVO.zip";
+
     const a =
     document.createElement("a");
 
@@ -768,15 +879,17 @@ async function convertirArchivos(tipo="zip"){
     URL.createObjectURL(contenido);
 
     a.download =
-    "XLIAN_ARCHIVO.zip";
+    nombreZIP;
 
     a.click();
 
     status.innerHTML =
-    `✅ ZIP creado correctamente`;
+    `✅ ${nombreZIP} creado correctamente`;
 
     mostrarResultados(exitosos,errores);
 }
+
+/* TABLES */
 
 function mostrarResultados(exitosos,errores){
 
@@ -793,7 +906,6 @@ function mostrarResultados(exitosos,errores){
             </td>
 
         </tr>
-
         `;
     });
 
@@ -810,7 +922,6 @@ function mostrarResultados(exitosos,errores){
             </td>
 
         </tr>
-
         `;
     });
 }
