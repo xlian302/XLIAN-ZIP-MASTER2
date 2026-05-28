@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>XLIAN ZIP MASTER</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- ICONO PRO -->
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="g" x1="0" x2="1">
+<stop offset="0%" stop-color="%2300d4ff"/>
+<stop offset="100%" stop-color="%23b721ff"/>
+</linearGradient>
+</defs>
+
+<rect width="128" height="128" rx="28" fill="%230b1020"/>
+
+<path d="M30 38h68v14H30z" fill="url(%23g)"/>
+<path d="M36 52h56v14H36z" fill="url(%23g)" opacity="0.8"/>
+<path d="M42 66h44v14H42z" fill="url(%23g)" opacity="0.6"/>
+
+<path d="M26 84L50 108L102 56"
+stroke="%23ffffff"
+stroke-width="10"
+fill="none"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+</svg>'>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
@@ -17,640 +38,474 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+    font-family:Segoe UI,sans-serif;
 }
 
 body{
-
-    min-height:100vh;
-
-    overflow-x:hidden;
+    background:
+    radial-gradient(circle at top left,#1f2bff,#090b18 35%),
+    radial-gradient(circle at bottom right,#00d4ff,#090b18 40%),
+    #090b18;
 
     color:white;
-
-    background:
-    radial-gradient(circle at top left,#4f46e5 0%,transparent 35%),
-    radial-gradient(circle at bottom right,#06b6d4 0%,transparent 35%),
-    #050816;
-}
-
-body::before{
-
-    content:'';
-
-    position:fixed;
-
-    width:600px;
-    height:600px;
-
-    background:#b721ff;
-
-    filter:blur(220px);
-
-    opacity:.22;
-
-    top:-200px;
-    left:-200px;
-
-    z-index:-1;
-}
-
-body::after{
-
-    content:'';
-
-    position:fixed;
-
-    width:500px;
-    height:500px;
-
-    background:#00d4ff;
-
-    filter:blur(220px);
-
-    opacity:.18;
-
-    bottom:-200px;
-    right:-200px;
-
-    z-index:-1;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
 }
 
 .container{
 
-    width:95%;
+    width:100%;
+    max-width:1100px;
 
-    max-width:1350px;
+    background:rgba(255,255,255,0.05);
 
-    margin:auto;
+    border:1px solid rgba(255,255,255,0.1);
 
-    padding:40px 20px;
+    backdrop-filter:blur(15px);
+
+    border-radius:35px;
+
+    padding:40px;
+
+    box-shadow:
+    0 0 40px rgba(0,212,255,.2),
+    0 0 80px rgba(183,33,255,.15);
+
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 .header{
 
     text-align:center;
-
-    margin-bottom:50px;
-
-    animation:fadeDown 1s ease;
-}
-
-.logo{
-
-    font-size:95px;
-
-    margin-bottom:15px;
-
-    animation:float 3s ease-in-out infinite;
+    margin-bottom:40px;
 }
 
 .header h1{
 
-    font-size:60px;
-
+    font-size:58px;
     font-weight:800;
 
-    background:linear-gradient(
-    90deg,
-    #ffffff,
-    #00d4ff,
-    #b721ff);
+    background:linear-gradient(90deg,#ffffff,#00d4ff,#b721ff);
 
-    background-clip:text;
     -webkit-background-clip:text;
-
-    color:transparent;
     -webkit-text-fill-color:transparent;
 }
 
 .header p{
 
-    margin-top:15px;
-
-    font-size:21px;
-
-    color:#cbd5e1;
+    margin-top:10px;
+    font-size:20px;
+    color:#c7c7c7;
 }
 
-.grid{
+.drop-area{
 
-    display:grid;
+    border:3px dashed rgba(255,255,255,0.3);
 
-    grid-template-columns:1fr;
+    border-radius:30px;
 
-    gap:35px;
-}
+    padding:60px;
 
-.card{
+    text-align:center;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+    background:rgba(255,255,255,0.03);
+
+    min-height:280px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
 
     position:relative;
-
     overflow:hidden;
-
-    background:rgba(255,255,255,.06);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:blur(18px);
-
-    border-radius:35px;
-
-    padding:35px;
-
-    transition:.4s;
-
-    animation:fadeUp 1s ease;
 }
 
-.card:hover{
+.drop-area:hover{
 
-    transform:translateY(-8px);
+    transform:scale(1.01);
 
-    box-shadow:0 20px 50px rgba(0,212,255,.15);
+    border-color:#00d4ff;
+
+    box-shadow:0 0 30px rgba(0,212,255,.3);
 }
 
-.card::before{
+.drop-area.dragover{
 
-    content:'';
+    border-color:#b721ff;
+
+    background:rgba(183,33,255,0.08);
+}
+
+.drop-area h2{
+
+    font-size:34px;
+    margin-bottom:15px;
+}
+
+.drop-area p{
+
+    color:#cccccc;
+    font-size:18px;
+}
+
+.drop-area::before{
+
+    content:"";
 
     position:absolute;
 
-    width:260px;
-    height:260px;
+    width:500px;
+    height:500px;
 
-    border-radius:50%;
+    background:radial-gradient(circle,#00d4ff33,transparent);
 
-    background:rgba(255,255,255,.03);
-
-    top:-120px;
-    right:-120px;
+    animation:rotate 12s linear infinite;
 }
 
-.card h2{
+@keyframes rotate{
 
-    font-size:38px;
+    from{
+        transform:rotate(0deg);
+    }
 
-    margin-bottom:12px;
+    to{
+        transform:rotate(360deg);
+    }
 }
 
-.card p{
-
-    color:#d1d5db;
-
-    margin-bottom:25px;
-
-    line-height:1.7;
-}
-
-.drop-zone{
-
-    border:2px dashed rgba(255,255,255,.2);
-
-    border-radius:25px;
-
-    min-height:250px;
+.buttons{
 
     display:flex;
+    gap:15px;
+    flex-wrap:wrap;
 
-    align-items:center;
+    margin-top:30px;
+}
 
-    justify-content:center;
+button{
 
-    flex-direction:column;
+    flex:1;
 
-    text-align:center;
+    border:none;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    font-size:18px;
+    font-weight:bold;
 
     cursor:pointer;
 
     transition:.3s;
 
-    background:rgba(255,255,255,.03);
+    color:white;
 
-    padding:30px;
+    background:
+    linear-gradient(90deg,#4f46e5,#06b6d4);
 }
 
-.drop-zone:hover{
+button:hover{
 
-    border-color:#00d4ff;
+    transform:translateY(-4px) scale(1.02);
 
-    background:rgba(0,212,255,.08);
+    box-shadow:0 0 25px rgba(0,212,255,.4);
 }
 
-.drop-zone.dragover{
+.rar-btn{
 
-    transform:scale(1.02);
-
-    border-color:#b721ff;
-
-    background:rgba(183,33,255,.15);
+    background:
+    linear-gradient(90deg,#ff9500,#ff00cc);
 }
 
-.drop-zone i{
+.cancel-btn{
 
-    font-size:70px;
-
-    margin-bottom:15px;
-}
-
-.drop-zone span{
-
-    font-size:20px;
-
-    color:#e2e8f0;
-}
-
-.file-name{
-
-    margin-top:20px;
-
-    color:#00ffbf;
-
-    font-size:17px;
-
-    font-weight:600;
-}
-
-#folderPreview{
-
-    margin-top:22px;
-
-    max-height:260px;
-
-    overflow:auto;
-
-    padding-right:5px;
-}
-
-#folderPreview::-webkit-scrollbar{
-    width:8px;
-}
-
-#folderPreview::-webkit-scrollbar-thumb{
-
-    background:#00d4ff;
-
-    border-radius:20px;
-}
-
-.preview-item{
-
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    padding:14px;
-
-    border-radius:14px;
-
-    margin-bottom:12px;
-
-    color:#e2e8f0;
-
-    font-size:14px;
-
-    animation:fadeUp .3s ease;
+    background:
+    linear-gradient(90deg,#ff2d55,#ff0000);
 }
 
 .progress-container{
 
-    width:100%;
+    margin-top:35px;
 
-    height:22px;
-
-    background:rgba(255,255,255,.08);
-
-    border-radius:30px;
-
-    overflow:hidden;
-
-    margin-top:25px;
+    display:none;
 }
 
 .progress-bar{
 
-    width:0%;
+    width:100%;
+    height:28px;
+
+    background:#1d2335;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+    margin-top:10px;
+}
+
+.progress{
 
     height:100%;
+    width:0%;
 
-    border-radius:30px;
+    background:
+    linear-gradient(90deg,#00d4ff,#b721ff);
 
-    background:linear-gradient(
-    90deg,
-    #00d4ff,
-    #b721ff);
-
-    transition:.3s;
+    transition:.2s;
 }
 
 .progress-text{
 
     margin-top:10px;
-
-    text-align:center;
-
-    color:#00ffbf;
-
-    font-weight:700;
-
     font-size:18px;
-}
-
-button{
-
-    width:100%;
-
-    margin-top:20px;
-
-    padding:18px;
-
-    border:none;
-
-    border-radius:20px;
-
-    font-size:20px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    color:white;
-
-    background:linear-gradient(
-    90deg,
-    #4f46e5,
-    #b721ff,
-    #00d4ff);
-
-    background-size:300% 300%;
-
-    animation:gradientMove 6s infinite;
-
-    transition:.3s;
-}
-
-button:hover{
-
-    transform:scale(1.02);
-}
-
-.cancel-btn{
-
-    background:linear-gradient(
-    90deg,
-    #ff3b3b,
-    #ff006e);
-}
-
-.cancel-btn:hover{
-
-    box-shadow:0 0 25px rgba(255,0,110,.4);
 }
 
 .status{
 
-    margin-top:20px;
+    margin-top:15px;
+
+    color:#00ffb7;
 
     font-size:18px;
-
-    color:#00ffbf;
-
-    text-align:center;
-
-    line-height:1.7;
-
-    min-height:40px;
 }
 
-.result-box{
+.file-list{
 
     margin-top:30px;
+
+    background:rgba(255,255,255,0.04);
+
+    border-radius:20px;
+
+    padding:20px;
+
+    max-height:260px;
+
+    overflow:auto;
+}
+
+.file-item{
+
+    padding:12px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    color:#d7d7d7;
+}
+
+.tables{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+    margin-top:35px;
+}
+
+.table-box{
+
+    background:rgba(255,255,255,0.04);
 
     padding:20px;
 
     border-radius:20px;
-
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.08);
 }
 
-.success-box{
-
-    border-left:5px solid #00ffbf;
-}
-
-.failed-box{
-
-    border-left:5px solid #ff4d6d;
-}
-
-.result-box h3{
+.table-box h3{
 
     margin-bottom:15px;
 }
 
-.result-table{
+table{
 
     width:100%;
-
     border-collapse:collapse;
 }
 
-.result-table th{
-
-    background:rgba(255,255,255,.08);
+th,td{
 
     padding:12px;
-
     text-align:left;
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.result-table td{
+.success{
 
-    padding:12px;
+    color:#00ffb7;
+}
 
-    border-top:1px solid rgba(255,255,255,.08);
+.error{
 
-    color:#dbe4ee;
-
-    font-size:14px;
+    color:#ff5b7f;
 }
 
 .footer{
 
-    margin-top:70px;
+    margin-top:45px;
 
     text-align:center;
 
-    color:#cbd5e1;
+    color:#c9c9c9;
 
-    line-height:2.1;
-
-    font-size:18px;
+    line-height:2;
 }
 
-.footer strong{
-    color:white;
+input{
+    display:none;
 }
 
-@keyframes gradientMove{
+@media(max-width:900px){
 
-    0%{
-        background-position:0% 50%;
+    .tables{
+        grid-template-columns:1fr;
     }
-
-    50%{
-        background-position:100% 50%;
-    }
-
-    100%{
-        background-position:0% 50%;
-    }
-}
-
-@keyframes float{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
-}
-
-@keyframes fadeDown{
-
-    from{
-        opacity:0;
-        transform:translateY(-30px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes fadeUp{
-
-    from{
-        opacity:0;
-        transform:translateY(40px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@media(max-width:768px){
 
     .header h1{
         font-size:42px;
     }
 
-    .card{
-        padding:25px;
+    .drop-area{
+        padding:40px;
     }
 }
 
 </style>
-
 </head>
-
 <body>
 
 <div class="container">
 
     <div class="header">
 
-        <div class="logo">📦</div>
-
         <h1>XLIAN ZIP MASTER</h1>
 
         <p>
-            Convierte carpetas a ZIP con animaciones, progreso y validación inteligente
+            Convierte archivos y carpetas a ZIP fácilmente
         </p>
 
     </div>
 
-    <div class="grid">
+    <div class="drop-area" id="dropArea">
 
-        <div class="card">
+        <h2>📂 Arrastra tus carpetas aquí</h2>
 
-            <h2>📁 Convertir Carpetas</h2>
+        <p>
+            o haz clic para seleccionar carpetas y archivos
+        </p>
 
-            <p>
-                Arrastra una carpeta completa o haz clic para seleccionarla.
-            </p>
+        <input type="file"
+        id="fileInput"
+        webkitdirectory
+        multiple>
 
-            <div class="drop-zone" id="folderDrop">
+    </div>
 
-                <i>🗂️</i>
+    <div class="buttons">
 
-                <span>
-                    Arrastra carpetas aquí
-                </span>
+        <button onclick="convertirArchivos('zip')">
+            📦 Convertir a ZIP
+        </button>
 
-            </div>
+        <button onclick="convertirArchivos('rar')" class="rar-btn">
+            🗜️ Convertir a RAR
+        </button>
 
-            <input
-            type="file"
-            id="folderInput"
-            webkitdirectory
-            multiple
-            hidden>
+        <button onclick="cancelarConversion()" class="cancel-btn">
+            ❌ Cancelar
+        </button>
 
-            <div class="file-name" id="folderName">
+    </div>
 
-                Ninguna carpeta seleccionada
+    <div class="progress-container" id="progressContainer">
 
-            </div>
+        <h3>⚡ Progreso</h3>
 
-            <div id="folderPreview"></div>
+        <div class="progress-bar">
 
-            <div class="progress-container">
+            <div class="progress" id="progress"></div>
 
-                <div
-                class="progress-bar"
-                id="progressBar"></div>
+        </div>
 
-            </div>
+        <div class="progress-text" id="progressText">
+            0%
+        </div>
 
-            <div
-            class="progress-text"
-            id="progressText">
+        <div class="status" id="status"></div>
 
-                0%
+    </div>
 
-            </div>
+    <div class="file-list" id="fileList">
 
-            <button id="convertFolderBtn">
+        <h3>📁 Archivos y carpetas cargadas</h3>
 
-                Convertir Carpeta
+    </div>
 
-            </button>
+    <div class="tables">
 
-            <button
-            id="cancelBtn"
-            class="cancel-btn">
+        <div class="table-box">
 
-                Cancelar Conversión
+            <h3>✅ Convertidos</h3>
 
-            </button>
+            <table>
 
-            <div
-            class="status"
-            id="folderStatus"></div>
+                <thead>
 
-            <div id="resultsContainer"></div>
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Estado</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="resultTable"></tbody>
+
+            </table>
+
+        </div>
+
+        <div class="table-box">
+
+            <h3>❌ No convertidos</h3>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Causa</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="errorTable"></tbody>
+
+            </table>
 
         </div>
 
@@ -658,19 +513,15 @@ button:hover{
 
     <div class="footer">
 
-        <div>
-            <strong>XLIAN ZIP MASTER © 2026</strong>
-        </div>
+        <h3>XLIAN ZIP MASTER © 2026</h3>
 
-        <div>
-            Nombre:
-            <strong>Elian Toribio</strong>
-        </div>
+        <p>
+            Elian Toribio
+        </p>
 
-        <div>
-            Número:
-            <strong>849-340-8498</strong>
-        </div>
+        <p>
+            849-340-8498
+        </p>
 
     </div>
 
@@ -678,413 +529,246 @@ button:hover{
 
 <script>
 
-const folderInput =
-document.getElementById("folderInput");
+const dropArea = document.getElementById("dropArea");
 
-const folderDrop =
-document.getElementById("folderDrop");
+const fileInput = document.getElementById("fileInput");
 
-const folderName =
-document.getElementById("folderName");
+const progress = document.getElementById("progress");
 
-const folderPreview =
-document.getElementById("folderPreview");
+const progressText = document.getElementById("progressText");
 
-const folderStatus =
-document.getElementById("folderStatus");
+const status = document.getElementById("status");
 
-const progressBar =
-document.getElementById("progressBar");
+const progressContainer =
+document.getElementById("progressContainer");
 
-const progressText =
-document.getElementById("progressText");
+const fileList =
+document.getElementById("fileList");
 
-const resultsContainer =
-document.getElementById("resultsContainer");
+const resultTable =
+document.getElementById("resultTable");
 
-let selectedFolderFiles = [];
+const errorTable =
+document.getElementById("errorTable");
 
-let cancelCompression = false;
+let files = [];
 
-const convertedFiles = [];
+let cancelado = false;
 
-const failedFiles = [];
+dropArea.addEventListener("click",()=>{
 
-// =========================
-// DRAG & DROP
-// =========================
-
-folderDrop.addEventListener("click",()=>{
-
-    folderInput.click();
+    fileInput.click();
 
 });
 
-folderDrop.addEventListener("dragover",(e)=>{
+fileInput.addEventListener("change",(e)=>{
+
+    files = [...e.target.files];
+
+    mostrarArchivos();
+
+});
+
+dropArea.addEventListener("dragover",(e)=>{
 
     e.preventDefault();
 
-    folderDrop.classList.add("dragover");
+    dropArea.classList.add("dragover");
 
 });
 
-folderDrop.addEventListener("dragleave",()=>{
+dropArea.addEventListener("dragleave",()=>{
 
-    folderDrop.classList.remove("dragover");
+    dropArea.classList.remove("dragover");
 
 });
 
-folderDrop.addEventListener("drop",(e)=>{
+dropArea.addEventListener("drop",(e)=>{
 
     e.preventDefault();
 
-    folderDrop.classList.remove("dragover");
+    dropArea.classList.remove("dragover");
 
-    selectedFolderFiles =
-    [...e.dataTransfer.files];
+    files = [...e.dataTransfer.files];
 
-    updateFolderUI();
-
-});
-
-folderInput.addEventListener("change",(e)=>{
-
-    selectedFolderFiles =
-    [...e.target.files];
-
-    updateFolderUI();
+    mostrarArchivos();
 
 });
 
-// =========================
-// MOSTRAR ARCHIVOS
-// =========================
+function mostrarArchivos(){
 
-function updateFolderUI(){
+    fileList.innerHTML =
+    "<h3>📁 Archivos y carpetas cargadas</h3>";
 
-    folderPreview.innerHTML = "";
+    files.forEach(file=>{
 
-    if(!selectedFolderFiles.length){
+        const div = document.createElement("div");
 
-        folderName.innerHTML =
-        "Ninguna carpeta seleccionada";
-
-        return;
-    }
-
-    folderName.innerHTML =
-    `✅ ${selectedFolderFiles.length} archivo(s) cargado(s)`;
-
-    selectedFolderFiles.forEach(file=>{
-
-        const div =
-        document.createElement("div");
-
-        div.className = "preview-item";
+        div.className = "file-item";
 
         div.innerHTML =
-        `📄 ${file.webkitRelativePath}`;
+        `📄 ${file.webkitRelativePath || file.name}`;
 
-        folderPreview.appendChild(div);
+        fileList.appendChild(div);
 
     });
-
 }
 
-// =========================
-// CANCELAR
-// =========================
+function cancelarConversion(){
 
-document
-.getElementById("cancelBtn")
-.addEventListener("click",()=>{
+    cancelado = true;
 
-    cancelCompression = true;
-
-    folderStatus.innerHTML =
+    status.innerHTML =
     "❌ Conversión cancelada";
+}
 
-});
+async function convertirArchivos(tipo="zip"){
 
-// =========================
-// CONVERTIR
-// =========================
+    if(files.length === 0){
 
-document
-.getElementById("convertFolderBtn")
-.addEventListener("click",async()=>{
-
-    if(!selectedFolderFiles.length){
-
-        alert("Selecciona una carpeta");
+        alert("Sube archivos primero");
 
         return;
     }
 
-    try{
+    cancelado = false;
 
-        cancelCompression = false;
+    progressContainer.style.display = "block";
 
-        convertedFiles.length = 0;
+    progress.style.width = "0%";
 
-        failedFiles.length = 0;
+    progressText.innerHTML = "0%";
 
-        resultsContainer.innerHTML = "";
+    resultTable.innerHTML = "";
 
-        folderStatus.innerHTML =
-        "⏳ Comprimiendo carpeta...";
+    errorTable.innerHTML = "";
 
-        progressBar.style.width = "0%";
+    let exitosos = [];
 
-        progressText.innerHTML = "0%";
+    let errores = [];
 
-        const zip = new JSZip();
+    if(tipo === "rar"){
 
-        let processed = 0;
+        alert(
+        "⚠️ Los navegadores no pueden crear archivos .RAR reales sin un servidor externo.\n\nUsa ZIP para una conversión funcional."
+        );
 
-        const total =
-        selectedFolderFiles.length;
+        return;
+    }
 
-        for(const file of selectedFolderFiles){
+    const zip = new JSZip();
 
-            if(cancelCompression){
+    for(let i=0;i<files.length;i++){
 
-                progressBar.style.width = "0%";
+        if(cancelado){
+            return;
+        }
 
-                progressText.innerHTML = "0%";
+        const file = files[i];
 
-                return;
-            }
+        try{
 
-            try{
-
-                if(file.size === 0){
-
-                    failedFiles.push({
-
-                        name:file.webkitRelativePath,
-
-                        reason:"Archivo vacío"
-
-                    });
-
-                    continue;
-                }
-
-                if(file.size > 1024 * 1024 * 1024){
-
-                    failedFiles.push({
-
-                        name:file.webkitRelativePath,
-
-                        reason:"Archivo demasiado grande"
-
-                    });
-
-                    continue;
-                }
-
-                const content =
-                await file.arrayBuffer();
-
-                zip.file(
-                    file.webkitRelativePath,
-                    content
-                );
-
-                convertedFiles.push({
-
-                    name:file.webkitRelativePath,
-
-                    size:file.size
-
-                });
-
-            }catch(err){
-
-                failedFiles.push({
-
-                    name:file.webkitRelativePath,
-
-                    reason:"Error leyendo archivo"
-
-                });
-
-            }
-
-            processed++;
-
-            const percent =
-            Math.floor(
-            (processed / total) * 100
+            zip.file(
+            file.webkitRelativePath || file.name,
+            file
             );
 
-            progressBar.style.width =
-            percent + "%";
+            exitosos.push({
 
-            progressText.innerHTML =
-            percent + "%";
+                nombre:file.name,
+                estado:"Convertido"
+
+            });
 
         }
 
-        const blob =
-        await zip.generateAsync({
+        catch(err){
 
-            type:"blob",
+            errores.push({
 
-            compression:"DEFLATE",
+                nombre:file.name,
+                causa:err.message
 
-            compressionOptions:{
-                level:9
-            }
+            });
+        }
 
-        });
+        const porcentaje =
+        Math.round(((i+1)/files.length)*100);
 
-        const firstFile =
-        selectedFolderFiles[0]
-        .webkitRelativePath;
+        progress.style.width =
+        porcentaje + "%";
 
-        const folderRealName =
-        firstFile.split("/")[0];
+        progressText.innerHTML =
+        porcentaje + "%";
 
-        const link =
-        document.createElement("a");
+        status.innerHTML =
+        `📦 Comprimiendo ${file.name}`;
 
-        link.href =
-        URL.createObjectURL(blob);
-
-        link.download =
-        folderRealName + ".zip";
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        document.body.removeChild(link);
-
-        progressBar.style.width = "100%";
-
-        progressText.innerHTML = "100%";
-
-        folderStatus.innerHTML = `
-        ✅ La carpeta
-        "<strong>${folderRealName}</strong>"
-        ha sido creada con éxito
-        `;
-
-        renderResults();
-
-    }catch(error){
-
-        console.error(error);
-
-        folderStatus.innerHTML =
-        "❌ Error general al comprimir";
-
+        await new Promise(r=>setTimeout(r,15));
     }
 
-});
+    status.innerHTML =
+    "⚡ Generando ZIP...";
 
-// =========================
-// TABLAS RESULTADOS
-// =========================
+    const contenido =
+    await zip.generateAsync({
 
-function renderResults(){
+        type:"blob"
 
-    let resultHTML = `
-
-    <div class="result-box success-box">
-
-        <h3>
-        ✅ Archivos Convertidos
-        </h3>
-
-        <table class="result-table">
-
-            <tr>
-                <th>Archivo</th>
-                <th>Estado</th>
-            </tr>
-
-    `;
-
-    convertedFiles.forEach(file=>{
-
-        resultHTML += `
-
-        <tr>
-
-            <td>${file.name}</td>
-
-            <td>Convertido</td>
-
-        </tr>
-
-        `;
     });
 
-    resultHTML += `
-        </table>
-    </div>
-    `;
+    const a =
+    document.createElement("a");
 
-    resultHTML += `
+    a.href =
+    URL.createObjectURL(contenido);
 
-    <div class="result-box failed-box">
+    a.download =
+    "XLIAN_ARCHIVO.zip";
 
-        <h3>
-        ❌ Archivos No Convertidos
-        </h3>
+    a.click();
 
-        <table class="result-table">
+    status.innerHTML =
+    `✅ La carpeta ZIP ha sido creada con éxito`;
 
-            <tr>
-                <th>Archivo</th>
-                <th>Causa</th>
-            </tr>
+    mostrarResultados(exitosos,errores);
+}
 
-    `;
+function mostrarResultados(exitosos,errores){
 
-    if(failedFiles.length === 0){
+    exitosos.forEach(item=>{
 
-        resultHTML += `
+        resultTable.innerHTML += `
 
         <tr>
 
-            <td colspan="2">
-                Todos los archivos fueron convertidos correctamente
+            <td>${item.nombre}</td>
+
+            <td class="success">
+                ${item.estado}
             </td>
 
         </tr>
 
         `;
+    });
 
-    }else{
+    errores.forEach(item=>{
 
-        failedFiles.forEach(file=>{
+        errorTable.innerHTML += `
 
-            resultHTML += `
+        <tr>
 
-            <tr>
+            <td>${item.nombre}</td>
 
-                <td>${file.name}</td>
+            <td class="error">
+                ${item.causa}
+            </td>
 
-                <td>${file.reason}</td>
+        </tr>
 
-            </tr>
-
-            `;
-        });
-
-    }
-
-    resultHTML += `
-        </table>
-    </div>
-    `;
-
-    resultsContainer.innerHTML =
-    resultHTML;
+        `;
+    });
 }
 
 </script>
