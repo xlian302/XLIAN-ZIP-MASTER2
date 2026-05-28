@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>XLIAN ZIP MASTER</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    color:white;
+
+    background:
+    radial-gradient(circle at top left,#4f46e5 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#06b6d4 0%,transparent 35%),
+    #050816;
+}
+
+body::before{
+
+    content:'';
+
+    position:fixed;
+
+    width:600px;
+    height:600px;
+
+    background:#b721ff;
+
+    filter:blur(220px);
+
+    opacity:.22;
+
+    top:-200px;
+    left:-200px;
+
+    z-index:-1;
+}
+
+body::after{
+
+    content:'';
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    background:#00d4ff;
+
+    filter:blur(220px);
+
+    opacity:.18;
+
+    bottom:-200px;
+    right:-200px;
+
+    z-index:-1;
+}
+
+.container{
+
+    width:95%;
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:40px 20px;
+}
+
+.header{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+    animation:fadeDown 1s ease;
+}
+
+.logo{
+
+    font-size:95px;
+
+    margin-bottom:15px;
+
+    animation:float 3s ease-in-out infinite;
+}
+
+.header h1{
+
+    font-size:60px;
+
+    font-weight:800;
+
+    background:linear-gradient(
+    90deg,
+    #ffffff,
+    #00d4ff,
+    #b721ff);
+
+    background-clip:text;
+    -webkit-background-clip:text;
+
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+}
+
+.header p{
+
+    margin-top:15px;
+
+    font-size:21px;
+
+    color:#cbd5e1;
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:35px;
+}
+
+.card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:35px;
+
+    padding:35px;
+
+    transition:.4s;
+
+    animation:fadeUp 1s ease;
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 50px rgba(0,212,255,.15);
+}
+
+.card::before{
+
+    content:'';
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.03);
+
+    top:-120px;
+    right:-120px;
+}
+
+.card h2{
+
+    font-size:38px;
+
+    margin-bottom:12px;
+}
+
+.card p{
+
+    color:#d1d5db;
+
+    margin-bottom:25px;
+
+    line-height:1.7;
+}
+
+.drop-zone{
+
+    border:2px dashed rgba(255,255,255,.2);
+
+    border-radius:25px;
+
+    min-height:250px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-direction:column;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    background:rgba(255,255,255,.03);
+
+    padding:30px;
+}
+
+.drop-zone:hover{
+
+    border-color:#00d4ff;
+
+    background:rgba(0,212,255,.08);
+}
+
+.drop-zone.dragover{
+
+    transform:scale(1.02);
+
+    border-color:#b721ff;
+
+    background:rgba(183,33,255,.15);
+}
+
+.drop-zone i{
+
+    font-size:70px;
+
+    margin-bottom:15px;
+}
+
+.drop-zone span{
+
+    font-size:20px;
+
+    color:#e2e8f0;
+}
+
+.file-name{
+
+    margin-top:20px;
+
+    color:#00ffbf;
+
+    font-size:17px;
+
+    font-weight:600;
+}
+
+#folderPreview{
+
+    margin-top:22px;
+
+    max-height:260px;
+
+    overflow:auto;
+
+    padding-right:5px;
+}
+
+#folderPreview::-webkit-scrollbar{
+    width:8px;
+}
+
+#folderPreview::-webkit-scrollbar-thumb{
+
+    background:#00d4ff;
+
+    border-radius:20px;
+}
+
+.preview-item{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    padding:14px;
+
+    border-radius:14px;
+
+    margin-bottom:12px;
+
+    color:#e2e8f0;
+
+    font-size:14px;
+
+    animation:fadeUp .3s ease;
+}
+
+.progress-container{
+
+    width:100%;
+
+    height:22px;
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    margin-top:25px;
+}
+
+.progress-bar{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:30px;
+
+    background:linear-gradient(
+    90deg,
+    #00d4ff,
+    #b721ff);
+
+    transition:.3s;
+}
+
+.progress-text{
+
+    margin-top:10px;
+
+    text-align:center;
+
+    color:#00ffbf;
+
+    font-weight:700;
+
+    font-size:18px;
+}
+
+button{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:20px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    color:white;
+
+    background:linear-gradient(
+    90deg,
+    #4f46e5,
+    #b721ff,
+    #00d4ff);
+
+    background-size:300% 300%;
+
+    animation:gradientMove 6s infinite;
+
+    transition:.3s;
+}
+
+button:hover{
+
+    transform:scale(1.02);
+}
+
+.cancel-btn{
+
+    background:linear-gradient(
+    90deg,
+    #ff3b3b,
+    #ff006e);
+}
+
+.cancel-btn:hover{
+
+    box-shadow:0 0 25px rgba(255,0,110,.4);
+}
+
+.status{
+
+    margin-top:20px;
+
+    font-size:18px;
+
+    color:#00ffbf;
+
+    text-align:center;
+
+    line-height:1.7;
+
+    min-height:40px;
+}
+
+.result-box{
+
+    margin-top:30px;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.success-box{
+
+    border-left:5px solid #00ffbf;
+}
+
+.failed-box{
+
+    border-left:5px solid #ff4d6d;
+}
+
+.result-box h3{
+
+    margin-bottom:15px;
+}
+
+.result-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.result-table th{
+
+    background:rgba(255,255,255,.08);
+
+    padding:12px;
+
+    text-align:left;
+}
+
+.result-table td{
+
+    padding:12px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    color:#dbe4ee;
+
+    font-size:14px;
+}
+
+.footer{
+
+    margin-top:70px;
+
+    text-align:center;
+
+    color:#cbd5e1;
+
+    line-height:2.1;
+
+    font-size:18px;
+}
+
+.footer strong{
+    color:white;
+}
+
+@keyframes gradientMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+@keyframes fadeDown{
+
+    from{
+        opacity:0;
+        transform:translateY(-30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+
+    .header h1{
+        font-size:42px;
+    }
+
+    .card{
+        padding:25px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="logo">📦</div>
+
+        <h1>XLIAN ZIP MASTER</h1>
+
+        <p>
+            Convierte carpetas a ZIP con animaciones, progreso y validación inteligente
+        </p>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+
+            <h2>📁 Convertir Carpetas</h2>
+
+            <p>
+                Arrastra una carpeta completa o haz clic para seleccionarla.
+            </p>
+
+            <div class="drop-zone" id="folderDrop">
+
+                <i>🗂️</i>
+
+                <span>
+                    Arrastra carpetas aquí
+                </span>
+
+            </div>
+
+            <input
+            type="file"
+            id="folderInput"
+            webkitdirectory
+            multiple
+            hidden>
+
+            <div class="file-name" id="folderName">
+
+                Ninguna carpeta seleccionada
+
+            </div>
+
+            <div id="folderPreview"></div>
+
+            <div class="progress-container">
+
+                <div
+                class="progress-bar"
+                id="progressBar"></div>
+
+            </div>
+
+            <div
+            class="progress-text"
+            id="progressText">
+
+                0%
+
+            </div>
+
+            <button id="convertFolderBtn">
+
+                Convertir Carpeta
+
+            </button>
+
+            <button
+            id="cancelBtn"
+            class="cancel-btn">
+
+                Cancelar Conversión
+
+            </button>
+
+            <div
+            class="status"
+            id="folderStatus"></div>
+
+            <div id="resultsContainer"></div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        <div>
+            <strong>XLIAN ZIP MASTER © 2026</strong>
+        </div>
+
+        <div>
+            Nombre:
+            <strong>Elian Toribio</strong>
+        </div>
+
+        <div>
+            Número:
+            <strong>849-340-8498</strong>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const folderInput =
+document.getElementById("folderInput");
+
+const folderDrop =
+document.getElementById("folderDrop");
+
+const folderName =
+document.getElementById("folderName");
+
+const folderPreview =
+document.getElementById("folderPreview");
+
+const folderStatus =
+document.getElementById("folderStatus");
+
+const progressBar =
+document.getElementById("progressBar");
+
+const progressText =
+document.getElementById("progressText");
+
+const resultsContainer =
+document.getElementById("resultsContainer");
+
+let selectedFolderFiles = [];
+
+let cancelCompression = false;
+
+const convertedFiles = [];
+
+const failedFiles = [];
+
+// =========================
+// DRAG & DROP
+// =========================
+
+folderDrop.addEventListener("click",()=>{
+
+    folderInput.click();
+
+});
+
+folderDrop.addEventListener("dragover",(e)=>{
+
+    e.preventDefault();
+
+    folderDrop.classList.add("dragover");
+
+});
+
+folderDrop.addEventListener("dragleave",()=>{
+
+    folderDrop.classList.remove("dragover");
+
+});
+
+folderDrop.addEventListener("drop",(e)=>{
+
+    e.preventDefault();
+
+    folderDrop.classList.remove("dragover");
+
+    selectedFolderFiles =
+    [...e.dataTransfer.files];
+
+    updateFolderUI();
+
+});
+
+folderInput.addEventListener("change",(e)=>{
+
+    selectedFolderFiles =
+    [...e.target.files];
+
+    updateFolderUI();
+
+});
+
+// =========================
+// MOSTRAR ARCHIVOS
+// =========================
+
+function updateFolderUI(){
+
+    folderPreview.innerHTML = "";
+
+    if(!selectedFolderFiles.length){
+
+        folderName.innerHTML =
+        "Ninguna carpeta seleccionada";
+
+        return;
+    }
+
+    folderName.innerHTML =
+    `✅ ${selectedFolderFiles.length} archivo(s) cargado(s)`;
+
+    selectedFolderFiles.forEach(file=>{
+
+        const div =
+        document.createElement("div");
+
+        div.className = "preview-item";
+
+        div.innerHTML =
+        `📄 ${file.webkitRelativePath}`;
+
+        folderPreview.appendChild(div);
+
+    });
+
+}
+
+// =========================
+// CANCELAR
+// =========================
+
+document
+.getElementById("cancelBtn")
+.addEventListener("click",()=>{
+
+    cancelCompression = true;
+
+    folderStatus.innerHTML =
+    "❌ Conversión cancelada";
+
+});
+
+// =========================
+// CONVERTIR
+// =========================
+
+document
+.getElementById("convertFolderBtn")
+.addEventListener("click",async()=>{
+
+    if(!selectedFolderFiles.length){
+
+        alert("Selecciona una carpeta");
+
+        return;
+    }
+
+    try{
+
+        cancelCompression = false;
+
+        convertedFiles.length = 0;
+
+        failedFiles.length = 0;
+
+        resultsContainer.innerHTML = "";
+
+        folderStatus.innerHTML =
+        "⏳ Comprimiendo carpeta...";
+
+        progressBar.style.width = "0%";
+
+        progressText.innerHTML = "0%";
+
+        const zip = new JSZip();
+
+        let processed = 0;
+
+        const total =
+        selectedFolderFiles.length;
+
+        for(const file of selectedFolderFiles){
+
+            if(cancelCompression){
+
+                progressBar.style.width = "0%";
+
+                progressText.innerHTML = "0%";
+
+                return;
+            }
+
+            try{
+
+                if(file.size === 0){
+
+                    failedFiles.push({
+
+                        name:file.webkitRelativePath,
+
+                        reason:"Archivo vacío"
+
+                    });
+
+                    continue;
+                }
+
+                if(file.size > 1024 * 1024 * 1024){
+
+                    failedFiles.push({
+
+                        name:file.webkitRelativePath,
+
+                        reason:"Archivo demasiado grande"
+
+                    });
+
+                    continue;
+                }
+
+                const content =
+                await file.arrayBuffer();
+
+                zip.file(
+                    file.webkitRelativePath,
+                    content
+                );
+
+                convertedFiles.push({
+
+                    name:file.webkitRelativePath,
+
+                    size:file.size
+
+                });
+
+            }catch(err){
+
+                failedFiles.push({
+
+                    name:file.webkitRelativePath,
+
+                    reason:"Error leyendo archivo"
+
+                });
+
+            }
+
+            processed++;
+
+            const percent =
+            Math.floor(
+            (processed / total) * 100
+            );
+
+            progressBar.style.width =
+            percent + "%";
+
+            progressText.innerHTML =
+            percent + "%";
+
+        }
+
+        const blob =
+        await zip.generateAsync({
+
+            type:"blob",
+
+            compression:"DEFLATE",
+
+            compressionOptions:{
+                level:9
+            }
+
+        });
+
+        const firstFile =
+        selectedFolderFiles[0]
+        .webkitRelativePath;
+
+        const folderRealName =
+        firstFile.split("/")[0];
+
+        const link =
+        document.createElement("a");
+
+        link.href =
+        URL.createObjectURL(blob);
+
+        link.download =
+        folderRealName + ".zip";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+        progressBar.style.width = "100%";
+
+        progressText.innerHTML = "100%";
+
+        folderStatus.innerHTML = `
+        ✅ La carpeta
+        "<strong>${folderRealName}</strong>"
+        ha sido creada con éxito
+        `;
+
+        renderResults();
+
+    }catch(error){
+
+        console.error(error);
+
+        folderStatus.innerHTML =
+        "❌ Error general al comprimir";
+
+    }
+
+});
+
+// =========================
+// TABLAS RESULTADOS
+// =========================
+
+function renderResults(){
+
+    let resultHTML = `
+
+    <div class="result-box success-box">
+
+        <h3>
+        ✅ Archivos Convertidos
+        </h3>
+
+        <table class="result-table">
+
+            <tr>
+                <th>Archivo</th>
+                <th>Estado</th>
+            </tr>
+
+    `;
+
+    convertedFiles.forEach(file=>{
+
+        resultHTML += `
+
+        <tr>
+
+            <td>${file.name}</td>
+
+            <td>Convertido</td>
+
+        </tr>
+
+        `;
+    });
+
+    resultHTML += `
+        </table>
+    </div>
+    `;
+
+    resultHTML += `
+
+    <div class="result-box failed-box">
+
+        <h3>
+        ❌ Archivos No Convertidos
+        </h3>
+
+        <table class="result-table">
+
+            <tr>
+                <th>Archivo</th>
+                <th>Causa</th>
+            </tr>
+
+    `;
+
+    if(failedFiles.length === 0){
+
+        resultHTML += `
+
+        <tr>
+
+            <td colspan="2">
+                Todos los archivos fueron convertidos correctamente
+            </td>
+
+        </tr>
+
+        `;
+
+    }else{
+
+        failedFiles.forEach(file=>{
+
+            resultHTML += `
+
+            <tr>
+
+                <td>${file.name}</td>
+
+                <td>${file.reason}</td>
+
+            </tr>
+
+            `;
+        });
+
+    }
+
+    resultHTML += `
+        </table>
+    </div>
+    `;
+
+    resultsContainer.innerHTML =
+    resultHTML;
+}
+
+</script>
+
+</body>
+</html>
