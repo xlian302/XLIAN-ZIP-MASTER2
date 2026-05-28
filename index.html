@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>XLIAN ZIP MASTER</title>
 
+<!-- ICONOS -->
+<link rel="icon"
+type="image/png"
+href="icon-192.png">
+
+<link rel="apple-touch-icon"
+href="icon-192.png">
+
 <!-- PWA -->
-<link rel="manifest" href="manifest.json">
+<meta name="theme-color"
+content="#0b1020">
 
-<meta name="theme-color" content="#6d28d9">
+<meta name="apple-mobile-web-app-capable"
+content="yes">
 
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="apple-mobile-web-app-status-bar-style"
+content="black-translucent">
 
-<link rel="apple-touch-icon" href="icon-192.png">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- MANIFEST JS -->
+<script src="manifest/manifest.js"></script>
 
 <!-- JSZIP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -85,6 +96,8 @@ body{
     }
 }
 
+/* HEADER */
+
 .header{
 
     text-align:center;
@@ -95,47 +108,49 @@ body{
 
 .logo-top{
 
-    width:110px;
-    height:110px;
+    width:120px;
+    height:120px;
 
-    margin:0 auto 20px auto;
+    object-fit:cover;
 
-    animation:pulse 3s infinite;
+    border-radius:32px;
 
-    filter:
-    drop-shadow(0 0 15px #00d4ff)
-    drop-shadow(0 0 35px #b721ff);
+    margin:0 auto 25px auto;
+
+    box-shadow:
+    0 0 35px rgba(0,212,255,.5);
+
+    animation:floatLogo 3s ease-in-out infinite;
 }
 
-.logo-top svg{
-
-    width:100%;
-    height:100%;
-}
-
-@keyframes pulse{
+@keyframes floatLogo{
 
     0%{
-        transform:scale(1);
+        transform:translateY(0px);
     }
 
     50%{
-        transform:scale(1.08);
+        transform:translateY(-10px);
     }
 
     100%{
-        transform:scale(1);
+        transform:translateY(0px);
     }
 }
 
 .header h1{
 
-    font-size:68px;
+    font-size:72px;
     font-weight:900;
 
-    background:linear-gradient(90deg,#ffffff,#00d4ff,#b721ff);
+    background:
+    linear-gradient(90deg,
+    #ffffff,
+    #00d4ff,
+    #b721ff);
 
     -webkit-background-clip:text;
+
     -webkit-text-fill-color:transparent;
 }
 
@@ -143,9 +158,9 @@ body{
 
     margin-top:12px;
 
-    font-size:22px;
+    font-size:24px;
 
-    color:#c7c7c7;
+    color:#d7d7d7;
 }
 
 /* DROP AREA */
@@ -156,7 +171,7 @@ body{
 
     border-radius:35px;
 
-    padding:80px 40px;
+    padding:90px 40px;
 
     text-align:center;
 
@@ -166,7 +181,7 @@ body{
 
     background:rgba(255,255,255,0.03);
 
-    min-height:350px;
+    min-height:360px;
 
     display:flex;
     justify-content:center;
@@ -183,7 +198,8 @@ body{
 
     border-color:#00d4ff;
 
-    box-shadow:0 0 35px rgba(0,212,255,.35);
+    box-shadow:
+    0 0 35px rgba(0,212,255,.35);
 }
 
 .drop-area.dragover{
@@ -199,8 +215,8 @@ body{
 
     position:absolute;
 
-    width:600px;
-    height:600px;
+    width:650px;
+    height:650px;
 
     background:
     radial-gradient(circle,#00d4ff22,transparent);
@@ -221,7 +237,7 @@ body{
 
 .drop-area h2{
 
-    font-size:52px;
+    font-size:54px;
     z-index:2;
 }
 
@@ -256,7 +272,7 @@ button{
 
     padding:22px;
 
-    border-radius:22px;
+    border-radius:24px;
 
     font-size:22px;
     font-weight:800;
@@ -273,9 +289,12 @@ button{
 
 button:hover{
 
-    transform:translateY(-5px) scale(1.02);
+    transform:
+    translateY(-5px)
+    scale(1.02);
 
-    box-shadow:0 0 25px rgba(0,212,255,.45);
+    box-shadow:
+    0 0 25px rgba(0,212,255,.45);
 }
 
 .rar-btn{
@@ -302,7 +321,7 @@ button:hover{
 .progress-bar{
 
     width:100%;
-    height:30px;
+    height:32px;
 
     background:#1d2335;
 
@@ -366,7 +385,8 @@ button:hover{
 
     padding:14px;
 
-    border-bottom:1px solid rgba(255,255,255,.08);
+    border-bottom:
+    1px solid rgba(255,255,255,.08);
 
     color:#d7d7d7;
 }
@@ -408,7 +428,8 @@ th,td{
 
     padding:14px;
 
-    border-bottom:1px solid rgba(255,255,255,.08);
+    border-bottom:
+    1px solid rgba(255,255,255,.08);
 
     text-align:left;
 }
@@ -441,11 +462,13 @@ th,td{
     margin-bottom:8px;
 }
 
-/* HIDDEN INPUT */
+/* INPUT */
 
 input{
     display:none;
 }
+
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -464,9 +487,14 @@ input{
     .drop-area{
         padding:60px 20px;
     }
+
+    button{
+        font-size:18px;
+    }
 }
 
 </style>
+
 </head>
 
 <body>
@@ -477,65 +505,29 @@ input{
     <div class="header">
 
         <!-- LOGO -->
-        <div class="logo-top">
-
-        <svg viewBox="0 0 128 128"
-        xmlns="http://www.w3.org/2000/svg">
-
-        <defs>
-
-        <linearGradient id="g" x1="0" x2="1">
-
-        <stop offset="0%" stop-color="#00d4ff"/>
-
-        <stop offset="100%" stop-color="#b721ff"/>
-
-        </linearGradient>
-
-        </defs>
-
-        <rect width="128"
-        height="128"
-        rx="28"
-        fill="#0b1020"/>
-
-        <path d="M30 38h68v14H30z"
-        fill="url(#g)"/>
-
-        <path d="M36 52h56v14H36z"
-        fill="url(#g)"
-        opacity="0.8"/>
-
-        <path d="M42 66h44v14H42z"
-        fill="url(#g)"
-        opacity="0.6"/>
-
-        <path d="M26 84L50 108L102 56"
-        stroke="#ffffff"
-        stroke-width="10"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"/>
-
-        </svg>
-
-        </div>
+        <img src="icon-192.png"
+        class="logo-top">
 
         <h1>XLIAN ZIP MASTER</h1>
 
         <p>
-            Convierte archivos y carpetas a ZIP de forma profesional
+            Convierte carpetas y archivos
+            a ZIP de forma profesional
         </p>
 
     </div>
 
     <!-- DROP -->
-    <div class="drop-area" id="dropArea">
+    <div class="drop-area"
+    id="dropArea">
 
-        <h2>📂 Arrastra carpetas aquí</h2>
+        <h2>
+            📂 Arrastra carpetas aquí
+        </h2>
 
         <p>
-            o haz clic para seleccionar carpetas y archivos
+            o haz clic para seleccionar
+            carpetas y archivos
         </p>
 
         <input type="file"
@@ -549,15 +541,23 @@ input{
     <div class="buttons">
 
         <button onclick="convertirArchivos()">
+
             📦 Convertir a ZIP
+
         </button>
 
-        <button onclick="infoRAR()" class="rar-btn">
+        <button onclick="infoRAR()"
+        class="rar-btn">
+
             🗜️ Información RAR
+
         </button>
 
-        <button onclick="cancelarConversion()" class="cancel-btn">
+        <button onclick="cancelarConversion()"
+        class="cancel-btn">
+
             ❌ Cancelar
+
         </button>
 
     </div>
@@ -653,7 +653,9 @@ input{
     <!-- FOOTER -->
     <div class="footer">
 
-        <h3>XLIAN ZIP MASTER © 2026</h3>
+        <h3>
+            XLIAN ZIP MASTER © 2026
+        </h3>
 
         <p>Elian Toribio</p>
 
@@ -768,7 +770,7 @@ function cancelarConversion(){
     "❌ Conversión cancelada";
 }
 
-/* INFO RAR */
+/* RAR INFO */
 
 function infoRAR(){
 
@@ -787,7 +789,9 @@ async function convertirArchivos(){
 
     if(files.length === 0){
 
-        alert("Sube archivos o carpetas primero");
+        alert(
+        "Sube archivos o carpetas primero"
+        );
 
         return;
     }
@@ -856,7 +860,9 @@ async function convertirArchivos(){
         status.innerHTML =
         `📦 Comprimiendo ${file.name}`;
 
-        await new Promise(r=>setTimeout(r,15));
+        await new Promise(
+        r=>setTimeout(r,15)
+        );
     }
 
     status.innerHTML =
@@ -886,12 +892,18 @@ async function convertirArchivos(){
     status.innerHTML =
     `✅ ${nombreZIP} creado correctamente`;
 
-    mostrarResultados(exitosos,errores);
+    mostrarResultados(
+    exitosos,
+    errores
+    );
 }
 
-/* TABLES */
+/* RESULTS */
 
-function mostrarResultados(exitosos,errores){
+function mostrarResultados(
+exitosos,
+errores
+){
 
     exitosos.forEach(item=>{
 
