@@ -878,25 +878,27 @@ async function convertirArchivos(){
     const nombreZIP =
     "XLIAN_ARCHIVO.zip";
 
-    const a =
-    document.createElement("a");
+  const url =
+URL.createObjectURL(contenido);
 
-    a.href =
-    URL.createObjectURL(contenido);
+const a =
+document.createElement("a");
 
-    a.download =
-    nombreZIP;
+a.href = url;
 
-    a.click();
+a.download = nombreZIP;
 
-    status.innerHTML =
-    `✅ ${nombreZIP} creado correctamente`;
+document.body.appendChild(a);
 
-    mostrarResultados(
-    exitosos,
-    errores
-    );
-}
+a.click();
+
+document.body.removeChild(a);
+
+setTimeout(()=>{
+
+    URL.revokeObjectURL(url);
+
+},1000);
 
 /* RESULTS */
 
