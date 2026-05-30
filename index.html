@@ -2,944 +2,521 @@
 <html lang="es">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>XLIAN ZIP MASTER</title>
-
-<!-- ICONOS -->
-<link rel="icon"
-type="image/png"
-href="icon-192.png">
-
-<link rel="apple-touch-icon"
-href="icon-192.png">
-
-<!-- PWA -->
-<meta name="theme-color"
-content="#0b1020">
-
-<meta name="apple-mobile-web-app-capable"
-content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style"
-content="black-translucent">
-
-<!-- MANIFEST JS -->
-<script src="manifest/manifest.js"></script>
-
-<!-- JSZIP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI,sans-serif;
-}
-
-body{
-
-    background:
-    radial-gradient(circle at top left,#1f2bff,#090b18 35%),
-    radial-gradient(circle at bottom right,#00d4ff,#090b18 40%),
-    #090b18;
-
-    color:white;
-
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    padding:30px;
-}
-
-.container{
-
-    width:100%;
-    max-width:1200px;
-
-    background:rgba(255,255,255,0.05);
-
-    border:1px solid rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(18px);
-
-    border-radius:40px;
-
-    padding:45px;
-
-    box-shadow:
-    0 0 40px rgba(0,212,255,.2),
-    0 0 90px rgba(183,33,255,.18);
-
-    animation:fadeIn 1s ease;
-}
-
-@keyframes fadeIn{
-
-    from{
-        opacity:0;
-        transform:translateY(40px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* HEADER */
-
-.header{
-
-    text-align:center;
-    margin-bottom:45px;
-}
-
-/* LOGO */
-
-.logo-top{
-
-    width:120px;
-    height:120px;
-
-    object-fit:cover;
-
-    border-radius:32px;
-
-    margin:0 auto 25px auto;
-
-    box-shadow:
-    0 0 35px rgba(0,212,255,.5);
-
-    animation:floatLogo 3s ease-in-out infinite;
-}
-
-@keyframes floatLogo{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
-}
-
-.header h1{
-
-    font-size:72px;
-    font-weight:900;
-
-    background:
-    linear-gradient(90deg,
-    #ffffff,
-    #00d4ff,
-    #b721ff);
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
-}
-
-.header p{
-
-    margin-top:12px;
-
-    font-size:24px;
-
-    color:#d7d7d7;
-}
-
-/* DROP AREA */
-
-.drop-area{
-
-    border:3px dashed rgba(255,255,255,0.25);
-
-    border-radius:35px;
-
-    padding:90px 40px;
-
-    text-align:center;
-
-    transition:.3s;
-
-    cursor:pointer;
-
-    background:rgba(255,255,255,0.03);
-
-    min-height:360px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-
-    position:relative;
-    overflow:hidden;
-}
-
-.drop-area:hover{
-
-    transform:scale(1.01);
-
-    border-color:#00d4ff;
-
-    box-shadow:
-    0 0 35px rgba(0,212,255,.35);
-}
-
-.drop-area.dragover{
-
-    border-color:#b721ff;
-
-    background:rgba(183,33,255,0.08);
-}
-
-.drop-area::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:650px;
-    height:650px;
-
-    background:
-    radial-gradient(circle,#00d4ff22,transparent);
-
-    animation:rotate 14s linear infinite;
-}
-
-@keyframes rotate{
-
-    from{
-        transform:rotate(0deg);
-    }
-
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-.drop-area h2{
-
-    font-size:54px;
-    z-index:2;
-}
-
-.drop-area p{
-
-    margin-top:15px;
-
-    font-size:22px;
-
-    color:#d7d7d7;
-
-    z-index:2;
-}
-
-/* BUTTONS */
-
-.buttons{
-
-    display:flex;
-    gap:20px;
-
-    flex-wrap:wrap;
-
-    margin-top:35px;
-}
-
-button{
-
-    flex:1;
-
-    border:none;
-
-    padding:22px;
-
-    border-radius:24px;
-
-    font-size:22px;
-    font-weight:800;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-    color:white;
-
-    background:
-    linear-gradient(90deg,#4f46e5,#06b6d4);
-}
-
-button:hover{
-
-    transform:
-    translateY(-5px)
-    scale(1.02);
-
-    box-shadow:
-    0 0 25px rgba(0,212,255,.45);
-}
-
-.rar-btn{
-
-    background:
-    linear-gradient(90deg,#ff9500,#ff00cc);
-}
-
-.cancel-btn{
-
-    background:
-    linear-gradient(90deg,#ff2d55,#ff0000);
-}
-
-/* PROGRESS */
-
-.progress-container{
-
-    margin-top:40px;
-
-    display:none;
-}
-
-.progress-bar{
-
-    width:100%;
-    height:32px;
-
-    background:#1d2335;
-
-    border-radius:50px;
-
-    overflow:hidden;
-
-    margin-top:12px;
-}
-
-.progress{
-
-    height:100%;
-    width:0%;
-
-    background:
-    linear-gradient(90deg,#00d4ff,#b721ff);
-
-    transition:.2s;
-}
-
-.progress-text{
-
-    margin-top:12px;
-
-    font-size:20px;
-}
-
-.status{
-
-    margin-top:15px;
-
-    color:#00ffb7;
-
-    font-size:20px;
-}
-
-/* FILE LIST */
-
-.file-list{
-
-    margin-top:35px;
-
-    background:rgba(255,255,255,0.04);
-
-    border-radius:25px;
-
-    padding:25px;
-
-    max-height:320px;
-
-    overflow:auto;
-}
-
-.file-list h3{
-
-    margin-bottom:15px;
-}
-
-.file-item{
-
-    padding:14px;
-
-    border-bottom:
-    1px solid rgba(255,255,255,.08);
-
-    color:#d7d7d7;
-}
-
-/* TABLES */
-
-.tables{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:25px;
-
-    margin-top:40px;
-}
-
-.table-box{
-
-    background:rgba(255,255,255,0.04);
-
-    padding:25px;
-
-    border-radius:25px;
-}
-
-.table-box h3{
-
-    margin-bottom:18px;
-}
-
-table{
-
-    width:100%;
-    border-collapse:collapse;
-}
-
-th,td{
-
-    padding:14px;
-
-    border-bottom:
-    1px solid rgba(255,255,255,.08);
-
-    text-align:left;
-}
-
-.success{
-
-    color:#00ffb7;
-}
-
-.error{
-
-    color:#ff5b7f;
-}
-
-/* FOOTER */
-
-.footer{
-
-    margin-top:50px;
-
-    text-align:center;
-
-    color:#cfcfcf;
-
-    line-height:2;
-}
-
-.footer h3{
-
-    margin-bottom:8px;
-}
-
-/* INPUT */
-
-input{
-    display:none;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-    .tables{
-        grid-template-columns:1fr;
-    }
-
-    .header h1{
-        font-size:44px;
-    }
-
-    .drop-area h2{
-        font-size:36px;
-    }
-
-    .drop-area{
-        padding:60px 20px;
-    }
-
-    button{
-        font-size:18px;
-    }
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XLIAN ZIP MASTER</title>
+
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link class="apple-touch-icon" href="icon-192.png">
+
+    <meta name="theme-color" content="#0b1020">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <script src="manifest/manifest.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, #1f2bff, #090b18 35%),
+                radial-gradient(circle at bottom right, #00d4ff, #090b18 40%),
+                #090b18;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            border-radius: 40px;
+            padding: 45px;
+            box-shadow:
+                0 0 40px rgba(0, 212, 255, .2),
+                0 0 90px rgba(183, 33, 255, .18);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .logo-top {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 32px;
+            margin: 0 auto 25px auto;
+            box-shadow: 0 0 35px rgba(0, 212, 255, .5);
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .header h1 {
+            font-size: 72px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ffffff, #00d4ff, #b721ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            margin-top: 12px;
+            font-size: 24px;
+            color: #d7d7d7;
+        }
+
+        /* DROP AREA */
+        .drop-area {
+            border: 3px dashed rgba(255, 255, 255, 0.25);
+            border-radius: 35px;
+            padding: 90px 40px;
+            text-align: center;
+            transition: .3s;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.03);
+            min-height: 360px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drop-area:hover {
+            transform: scale(1.01);
+            border-color: #00d4ff;
+            box-shadow: 0 0 35px rgba(0, 212, 255, .35);
+        }
+
+        .drop-area.dragover {
+            border-color: #b721ff;
+            background: rgba(183, 33, 255, 0.08);
+        }
+
+        .drop-area::before {
+            content: "";
+            position: absolute;
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle, #00d4ff22, transparent);
+            animation: rotate 14s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .drop-area h2, .drop-area p {
+            z-index: 2;
+        }
+
+        .drop-area h2 { font-size: 54px; }
+        .drop-area p { margin-top: 15px; font-size: 22px; color: #d7d7d7; }
+
+        /* BUTTONS */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 35px;
+        }
+
+        button {
+            flex: 1;
+            border: none;
+            padding: 22px;
+            border-radius: 24px;
+            font-size: 22px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .3s;
+            color: white;
+            background: linear-gradient(90deg, #4f46e5, #06b6d4);
+        }
+
+        button:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 212, 255, .45);
+        }
+
+        .rar-btn { background: linear-gradient(90deg, #ff9500, #ff00cc); }
+        .cancel-btn { background: linear-gradient(90deg, #ff2d55, #ff0000); }
+
+        /* PROGRESS */
+        .progress-container {
+            margin-top: 40px;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 32px;
+            background: #1d2335;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00d4ff, #b721ff);
+            transition: width .2s ease;
+        }
+
+        .progress-text { margin-top: 12px; font-size: 20px; }
+        .status { margin-top: 15px; color: #00ffb7; font-size: 20px; }
+
+        /* FILE LIST */
+        .file-list {
+            margin-top: 35px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 25px;
+            padding: 25px;
+            max-height: 320px;
+            overflow: auto;
+        }
+
+        .file-list h3 { margin-bottom: 15px; }
+        .file-item {
+            padding: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            color: #d7d7d7;
+        }
+
+        /* TABLES */
+        .tables {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .table-box {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 25px;
+            border-radius: 25px;
+        }
+
+        .table-box h3 { margin-bottom: 18px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px; border-bottom: 1px solid rgba(255, 255, 255, .08); text-align: left; }
+        .success { color: #00ffb7; }
+        .error { color: #ff5b7f; }
+
+        /* FOOTER */
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #cfcfcf;
+            line-height: 2;
+        }
+
+        .footer h3 { margin-bottom: 8px; }
+        input { display: none; }
+
+        /* MOBILE */
+        @media(max-width:900px){
+            .tables { grid-template-columns: 1fr; }
+            .header h1 { font-size: 44px; }
+            .drop-area h2 { font-size: 36px; }
+            .drop-area { padding: 60px 20px; }
+            button { font-size: 18px; }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
-
-    <!-- HEADER -->
     <div class="header">
-
-        <!-- LOGO -->
-        <img src="icon-192.png"
-        class="logo-top">
-
+        <img src="icon-192.png" class="logo-top" alt="Logo">
         <h1>XLIAN ZIP MASTER</h1>
-
-        <p>
-            Convierte carpetas y archivos
-            a ZIP de forma profesional
-        </p>
-
+        <p>Convierte carpetas y archivos a ZIP de forma profesional</p>
     </div>
 
-    <!-- DROP -->
-    <div class="drop-area"
-    id="dropArea">
-
-        <h2>
-            📂 Arrastra carpetas aquí
-        </h2>
-
-        <p>
-            o haz clic para seleccionar
-            carpetas y archivos
-        </p>
-
-        <input type="file"
-        id="fileInput"
-        webkitdirectory
-        multiple>
-
+    <div class="drop-area" id="dropArea">
+        <h2>📂 Arrastra carpetas aquí</h2>
+        <p>o haz clic para seleccionar carpetas y archivos</p>
+        <input type="file" id="fileInput" webkitdirectory multiple>
     </div>
 
-    <!-- BUTTONS -->
     <div class="buttons">
-
-        <button onclick="convertirArchivos()">
-
-            📦 Convertir a ZIP
-
-        </button>
-
-        <button onclick="infoRAR()"
-        class="rar-btn">
-
-            🗜️ Información RAR
-
-        </button>
-
-        <button onclick="cancelarConversion()"
-        class="cancel-btn">
-
-            ❌ Cancelar
-
-        </button>
-
+        <button onclick="convertirArchivos()">📦 Convertir a ZIP</button>
+        <button onclick="infoRAR()" class="rar-btn">🗜️ Información RAR</button>
+        <button onclick="cancelarConversion()" class="cancel-btn">❌ Cancelar</button>
     </div>
 
-    <!-- PROGRESS -->
-    <div class="progress-container"
-    id="progressContainer">
-
+    <div class="progress-container" id="progressContainer">
         <h3>⚡ Progreso</h3>
-
         <div class="progress-bar">
-
-            <div class="progress"
-            id="progress"></div>
-
+            <div class="progress" id="progress"></div>
         </div>
-
-        <div class="progress-text"
-        id="progressText">
-
-            0%
-
-        </div>
-
-        <div class="status"
-        id="status"></div>
-
+        <div class="progress-text" id="progressText">0%</div>
+        <div class="status" id="status"></div>
     </div>
 
-    <!-- FILES -->
-    <div class="file-list"
-    id="fileList">
-
-        <h3>
-            📁 Archivos y carpetas cargadas
-        </h3>
-
+    <div class="file-list" id="fileList">
+        <h3>📁 Archivos y carpetas cargadas</h3>
     </div>
 
-    <!-- TABLES -->
     <div class="tables">
-
         <div class="table-box">
-
             <h3>✅ Convertidos</h3>
-
             <table>
-
                 <thead>
-
-                    <tr>
-
-                        <th>Archivo</th>
-
-                        <th>Estado</th>
-
-                    </tr>
-
+                    <tr><th>Archivo</th><th>Estado</th></tr>
                 </thead>
-
                 <tbody id="resultTable"></tbody>
-
             </table>
-
         </div>
 
         <div class="table-box">
-
             <h3>❌ No convertidos</h3>
-
             <table>
-
                 <thead>
-
-                    <tr>
-
-                        <th>Archivo</th>
-
-                        <th>Causa</th>
-
-                    </tr>
-
+                    <tr><th>Archivo</th><th>Causa</th></tr>
                 </thead>
-
                 <tbody id="errorTable"></tbody>
-
             </table>
-
         </div>
-
     </div>
 
-    <!-- FOOTER -->
     <div class="footer">
-
-        <h3>
-            XLIAN ZIP MASTER © 2026
-        </h3>
-
+        <h3>XLIAN ZIP MASTER © 2026</h3>
         <p>Elian Toribio</p>
-
         <p>849-340-8498</p>
-
     </div>
-
 </div>
 
 <script>
+    const dropArea = document.getElementById("dropArea");
+    const fileInput = document.getElementById("fileInput");
+    const progress = document.getElementById("progress");
+    const progressText = document.getElementById("progressText");
+    const status = document.getElementById("status");
+    const progressContainer = document.getElementById("progressContainer");
+    const fileList = document.getElementById("fileList");
+    const resultTable = document.getElementById("resultTable");
+    const errorTable = document.getElementById("errorTable");
 
-const dropArea =
-document.getElementById("dropArea");
+    let files = [];
+    let cancelado = false;
 
-const fileInput =
-document.getElementById("fileInput");
-
-const progress =
-document.getElementById("progress");
-
-const progressText =
-document.getElementById("progressText");
-
-const status =
-document.getElementById("status");
-
-const progressContainer =
-document.getElementById("progressContainer");
-
-const fileList =
-document.getElementById("fileList");
-
-const resultTable =
-document.getElementById("resultTable");
-
-const errorTable =
-document.getElementById("errorTable");
-
-let files = [];
-
-let cancelado = false;
-
-/* CLICK */
-
-dropArea.addEventListener("click",()=>{
-
-    fileInput.click();
-});
-
-/* INPUT */
-
-fileInput.addEventListener("change",(e)=>{
-
-    files = [...e.target.files];
-
-    mostrarArchivos();
-});
-
-/* DRAG */
-
-dropArea.addEventListener("dragover",(e)=>{
-
-    e.preventDefault();
-
-    dropArea.classList.add("dragover");
-});
-
-dropArea.addEventListener("dragleave",()=>{
-
-    dropArea.classList.remove("dragover");
-});
-
-dropArea.addEventListener("drop",(e)=>{
-
-    e.preventDefault();
-
-    dropArea.classList.remove("dragover");
-
-    files = [...e.dataTransfer.files];
-
-    mostrarArchivos();
-});
-
-/* SHOW FILES */
-
-function mostrarArchivos(){
-
-    fileList.innerHTML =
-    "<h3>📁 Archivos y carpetas cargadas</h3>";
-
-    files.forEach(file=>{
-
-        const div =
-        document.createElement("div");
-
-        div.className = "file-item";
-
-        div.innerHTML =
-        `📄 ${file.webkitRelativePath || file.name}`;
-
-        fileList.appendChild(div);
+    /* CLICK EN DROP AREA */
+    dropArea.addEventListener("click", () => {
+        fileInput.click();
     });
-}
 
-/* CANCEL */
+    /* SELECCIÓN DESDE EXPLORADOR */
+    fileInput.addEventListener("change", (e) => {
+        files = [...e.target.files];
+        mostrarArchivos();
+    });
 
-function cancelarConversion(){
+    /* EVENTOS DRAG & DROP */
+    dropArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropArea.classList.add("dragover");
+    });
 
-    cancelado = true;
+    dropArea.addEventListener("dragleave", () => {
+        dropArea.classList.remove("dragover");
+    });
 
-    status.innerHTML =
-    "❌ Conversión cancelada";
-}
+    dropArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropArea.classList.remove("dragover");
+        
+        // El API de Drag and Drop requiere procesar dataTransfer items para mantener carpetas,
+        // pero por simplicidad de compatibilidad directa con tu estructura usamos files.
+        if (e.dataTransfer.files) {
+            files = [...e.dataTransfer.files];
+            mostrarArchivos();
+        }
+    });
 
-/* RAR INFO */
+    /* MOSTRAR ARCHIVOS CARGADOS */
+    function mostrarArchivos() {
+        fileList.innerHTML = "<h3>📁 Archivos y carpetas cargadas</h3>";
+        if(files.length === 0) return;
 
-function infoRAR(){
+        // Si son demasiados archivos, limitamos la vista previa para no congelar la pantalla
+        const limiteVista = files.slice(0, 100);
+        limiteVista.forEach(file => {
+            const div = document.createElement("div");
+            div.className = "file-item";
+            div.innerHTML = `📄 ${file.webkitRelativePath || file.name}`;
+            fileList.appendChild(div);
+        });
 
-    alert(
-`⚠️ Los navegadores no pueden crear archivos RAR reales directamente.
-
-RAR necesita programas externos o servidores especializados.
-
-ZIP funciona perfectamente y mantiene la estructura completa de carpetas.`
-    );
-}
-
-/* ZIP */
-
-async function convertirArchivos(){
-
-    if(files.length === 0){
-
-        alert(
-        "Sube archivos o carpetas primero"
-        );
-
-        return;
+        if (files.length > 100) {
+            const div = document.createElement("div");
+            div.className = "file-item";
+            div.style.fontStyle = "italic";
+            div.innerHTML = `... y ${files.length - 100} archivos más.`;
+            fileList.appendChild(div);
+        }
     }
 
-    cancelado = false;
+    /* CANCELAR */
+    function cancelarConversion() {
+        cancelado = true;
+        status.innerHTML = "❌ Conversión cancelada por el usuario";
+    }
 
-    progressContainer.style.display = "block";
+    /* RAR INFO */
+    function infoRAR() {
+        alert(
+            `⚠️ Los navegadores no pueden crear archivos RAR reales directamente.\n\n` +
+            `RAR necesita programas externos o servidores especializados.\n\n` +
+            `ZIP funciona perfectamente y mantiene la estructura completa de carpetas.`
+        );
+    }
 
-    progress.style.width = "0%";
-
-    progressText.innerHTML = "0%";
-
-    resultTable.innerHTML = "";
-
-    errorTable.innerHTML = "";
-
-    let exitosos = [];
-
-    let errores = [];
-
-    const zip = new JSZip();
-
-    for(let i=0;i<files.length;i++){
-
-        if(cancelado){
+    /* PROCESAR Y GENERAR ZIP */
+    async function convertirArchivos() {
+        if (files.length === 0) {
+            alert("Sube archivos o carpetas primero");
             return;
         }
 
-        const file = files[i];
+        cancelado = false;
+        progressContainer.style.display = "block";
+        progress.style.width = "0%";
+        progressText.innerHTML = "0%";
+        resultTable.innerHTML = "";
+        errorTable.innerHTML = "";
 
-        try{
+        let exitosos = [];
+        let errores = [];
+        const zip = new JSZip();
 
-            zip.file(
-            file.webkitRelativePath || file.name,
-            file
-            );
+        for (let i = 0; i < files.length; i++) {
+            if (cancelado) {
+                status.innerHTML = "❌ Proceso interrumpido.";
+                return;
+            }
 
-            exitosos.push({
+            const file = files[i];
+            try {
+                // Almacena el archivo respetando la ruta interna de carpetas
+                const rutaDestino = file.webkitRelativePath || file.name;
+                zip.file(rutaDestino, file);
 
-                nombre:file.name,
-                estado:"Convertido"
+                exitosos.push({
+                    nombre: file.name,
+                    estado: "Convertido"
+                });
+            } catch (err) {
+                errores.push({
+                    nombre: file.name,
+                    causa: err.message
+                });
+            }
 
-            });
+            // Actualización del progreso
+            const porcentaje = Math.round(((i + 1) / files.length) * 100);
+            progress.style.width = porcentaje + "%";
+            progressText.innerHTML = porcentaje + "%";
+            status.innerHTML = `📦 Agregando: ${file.name}`;
 
+            // Breve respiro al hilo principal de JS para evitar congelamiento visual
+            if (i % 10 === 0) {
+                await new Promise(r => setTimeout(r, 1));
+            }
         }
 
-        catch(err){
+        try {
+            status.innerHTML = "⚡ Generando y comprimiendo ZIP final (Espere...)";
+            
+            const contenido = await zip.generateAsync({ type: "blob" });
 
-            errores.push({
+            status.innerHTML = "✅ ¡Listo! Descargando archivo...";
+            
+            const nombreZIP = "XLIAN_ARCHIVO.zip";
+            const url = URL.createObjectURL(contenido);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = nombreZIP;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
 
-                nombre:file.name,
-                causa:err.message
+            setTimeout(() => {
+                URL.revokeObjectURL(url);
+            }, 1000);
 
-            });
+        } catch (error) {
+            status.innerHTML = "❌ Error al generar el ZIP final.";
+            errores.push({ nombre: "Archivo Global", causa: error.message });
         }
 
-        const porcentaje =
-        Math.round(((i+1)/files.length)*100);
-
-        progress.style.width =
-        porcentaje + "%";
-
-        progressText.innerHTML =
-        porcentaje + "%";
-
-        status.innerHTML =
-        `📦 Comprimiendo ${file.name}`;
-
-        await new Promise(
-        r=>setTimeout(r,15)
-        );
+        // Llamamos a la función encargada de plasmar los resultados
+        mostrarResultados(exitosos, errores);
     }
 
-    status.innerHTML =
-    "⚡ Generando ZIP final...";
+    /* MOSTRAR RESULTADOS EN TABLAS */
+    function mostrarResultados(exitosos, errores) {
+        let htmlExitosos = "";
+        let htmlErrores = "";
 
-    const contenido =
-    await zip.generateAsync({
+        exitosos.forEach(item => {
+            htmlExitosos += `
+            <tr>
+                <td>${item.nombre}</td>
+                <td class="success">${item.estado}</td>
+            </tr>`;
+        });
 
-        type:"blob"
+        errores.forEach(item => {
+            htmlErrores += `
+            <tr>
+                <td>${item.nombre}</td>
+                <td class="error">${item.causa}</td>
+            </tr>`;
+        });
 
-    });
-
-    const nombreZIP =
-    "XLIAN_ARCHIVO.zip";
-
-  const url =
-URL.createObjectURL(contenido);
-
-const a =
-document.createElement("a");
-
-a.href = url;
-
-a.download = nombreZIP;
-
-document.body.appendChild(a);
-
-a.click();
-
-document.body.removeChild(a);
-
-setTimeout(()=>{
-
-    URL.revokeObjectURL(url);
-
-},1000);
-
-/* RESULTS */
-
-function mostrarResultados(
-exitosos,
-errores
-){
-
-    exitosos.forEach(item=>{
-
-        resultTable.innerHTML += `
-
-        <tr>
-
-            <td>${item.nombre}</td>
-
-            <td class="success">
-                ${item.estado}
-            </td>
-
-        </tr>
-        `;
-    });
-
-    errores.forEach(item=>{
-
-        errorTable.innerHTML += `
-
-        <tr>
-
-            <td>${item.nombre}</td>
-
-            <td class="error">
-                ${item.causa}
-            </td>
-
-        </tr>
-        `;
-    });
-}
-
+        resultTable.innerHTML = htmlExitosos;
+        errorTable.innerHTML = htmlErrores;
+    }
 </script>
 
 </body>
